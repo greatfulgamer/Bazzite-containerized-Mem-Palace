@@ -9,6 +9,17 @@ services:
     volumes:
       - ./chroma_data:/chromadb # Persistent storage
     command: ["chroma", "run", "--host", "0.0.0.0", "--port", "8000"]
+    services:
+  chromadb:
+    image: chromadb/chroma:1.5.3
+    container_name: chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma-data:/data
+      - ./chroma.docker.yaml:/config.yaml:ro
+    environment:
+      - CONFIG_PATH=/config.yaml   
 
   llm-service:
     build: .

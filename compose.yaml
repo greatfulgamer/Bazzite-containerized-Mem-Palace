@@ -24,3 +24,13 @@ services:
       - ./models:/models:ro
     devices:
       - /dev/dri:/dev/dri # GPU access    
+services:
+  chromadb:
+    image: chromadb/chroma:1.5.3
+    volumes:
+      - ./chroma-data:/data
+      - ./chroma.docker.yaml:/config.yaml:ro
+    environment:
+      - CONFIG_PATH=/config.yaml
+    ports:
+      - "8000:8000"   

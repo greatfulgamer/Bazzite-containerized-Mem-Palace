@@ -1,0 +1,26 @@
+# compose.yaml
+version: '3.8'
+services:
+  chromadb:
+    image: chromadb/chroma
+    container_name: chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma_data:/chromadb # Persistent storage
+    command: ["chroma", "run", "--host", "0.0.0.0", "--port", "8000"]
+
+  llm-service:
+    build: .
+    container_name: llm-app
+    depends_on:
+      - chromadb
+    ports:
+      - "3000:3000"
+    environment:
+      - CHROMA_SERVER_HOST=chromadb
+    volumes:
+      - ./app_data:/app/data
+      - ./models:/models:ro
+    devices:
+      - /dev/dri:/dev/dri # GPU access    

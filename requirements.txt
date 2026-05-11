@@ -1,0 +1,5 @@
+chromadb
+playwright
+mem-palace
+pyyaml
+tqdm   

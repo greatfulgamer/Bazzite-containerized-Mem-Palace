@@ -54,4 +54,7 @@ services:
     volumes:
       - ./chroma-data:/data
     command: ["chroma", "run", "--host", "0.0.0.0", "--port", "8000", "--chroma-data-path", "/data"]   
+[Install]
+WantedBy=default.target   
+loginctl enable-linger $USER   
 podlet compose --pod --install -f . compose.yaml   
